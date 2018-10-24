@@ -20,14 +20,6 @@
     <td>Jonatas Araújo da Silva</td>
     <td>1701264</td>
   </tr>
-  <tr>
-    <td>Victor Enrico</td>
-    <td>1700715</td>
-  </tr>
-  <tr>
-    <td>Victor Souza</td>
-    <td>1700768</td>
-  </tr>
 </table>
 </body>
 </html>
