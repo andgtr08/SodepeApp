@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Sodepe</string>
+    <string name="action_buscar">Buscar</string>
+    <string name="action_atualizar">Atualizar</string>
+    <string name="action_adicionar">Adicionar</string>
+    <string name="action_config">Configurações</string>
+    <string name="action_sobre">Sobre</string>
+    <string name="navigation_drawer_open">Navigation aberta</string>
+    <string name="navigation_drawer_close">Navigation fechada</string>
+</resources>

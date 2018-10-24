@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/menu_top">
+        <item
+            android:id="@+id/nav_home"
+            android:checked="true"
+            android:icon="@drawable/ic_home_black"
+            android:title="Home" />
+        <item android:id="@+id/nav_novo"
+            android:icon="@drawable/ic_add_item"
+            android:title="Novo"/>
+        <item android:id="@+id/nav_funcao1"
+            android:icon="@drawable/ic_funcao_black"
+            android:title="Função 1"/>
+        <item android:id="@+id/nav_funcao2"
+            android:icon="@drawable/ic_funcao_black"
+            android:title="Função 2"/>
+        <item android:id="@+id/nav_funcao3"
+            android:icon="@drawable/ic_funcao_black"
+            android:title="Função 3"/>
+        <item android:id="@+id/nav_mensagens"
+            android:icon="@drawable/ic_chat_black"
+            android:title="Mensagens"/>
+        <item android:id="@+id/nav_localizacao"
+            android:icon="@drawable/ic_local_black"
+            android:title="Localização"/>
+    </group>
+
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/menu_bottom">
+        <item android:id="@+id/nav_configuracoes"
+            android:icon="@drawable/ic_configuracoes_black"
+            android:title="Configurações"/>
+        <item android:id="@+id/nav_sair"
+            android:icon="@drawable/ic_exit_black"
+            android:title="Sair"/>
+    </group>
+</menu>
