@@ -16,10 +16,6 @@ import android.view.Window
 import android.view.WindowManager
 import android.os.Build
 
-
-
-
-
 class MainActivity : AppCompatActivity() {
 
     //Transforma this em variável Contexto.
@@ -34,14 +30,20 @@ class MainActivity : AppCompatActivity() {
 
         window.statusBarColor = Color.WHITE
 
-        var campoUsuario = editTextUsuario
-        var campoSenha = editTextSenha
-        var botaoSegundaTela = buttonEntrar
+        // procurar pelas preferências, se pediu para guardar usuário e senha
+        var lembrar = Prefs.getBoolean("lembrar")
+        if (lembrar) {
+            var lembrarNome  = Prefs.getString("lembrarNome")
+            var lembrarSenha  = Prefs.getString("lembrarSenha")
+            editTextUsuario.setText(lembrarNome)
+            editTextSenha.setText(lembrarSenha)
+            checkBoxLogin.isChecked = lembrar
+        }
 
-        botaoSegundaTela.setOnClickListener() {
+        buttonEntrar.setOnClickListener {
             // Caso os campos de usuario e senha estejam em branco, solicitar.
-            if (!(campoUsuario.text.isEmpty() || campoSenha.text.isEmpty())) {
-                if (campoUsuario.text.toString() == "aluno" && campoSenha.text.toString() == "impacta") {
+            if (!(editTextUsuario.text.isEmpty() || editTextSenha.text.isEmpty())) {
+                if (editTextUsuario.text.toString() == "aluno" && editTextSenha.text.toString() == "impacta") {
 
                     //Cria a notificação de autenticação.
                     val dialog = ProgressDialog.show(this, "", "Autenticando...", true)
@@ -50,10 +52,25 @@ class MainActivity : AppCompatActivity() {
                     handler.postDelayed({ dialog.dismiss()
                         //Abre uma nota tela.
                         val intent = Intent(context, login::class.java)
-                        intent.putExtra("nome", campoUsuario.text.toString())
+                        intent.putExtra("nome", editTextUsuario.text.toString())
                         intent.putExtra("numero", 10)
                         //Inicia a activity com os parametros da variável "params"
                         startActivityForResult(intent, 1)
+
+                        val valorUsuario = editTextUsuario.text.toString()
+                        val valorSenha = editTextSenha.text.toString()
+
+                        // armazenar valor do checkbox
+                        Prefs.setBoolean("lembrar", checkBoxLogin.isChecked)
+                        // verificar se é para lembrar nome e senha
+                        if (checkBoxLogin.isChecked) {
+                            Prefs.setString("lembrarNome", valorUsuario)
+                            Prefs.setString("lembrarSenha", valorSenha)
+                        } else{
+                            Prefs.setString("lembrarNome", "")
+                            Prefs.setString("lembrarSenha", "")
+                        }
+
                     }, 1000)
                 }else {
                     //Cria a notificação de autenticação.

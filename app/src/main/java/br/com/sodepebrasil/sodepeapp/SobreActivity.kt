@@ -102,7 +102,6 @@ class SobreActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         //Botão Sobre.
         val itemSobre = menu?.findItem(R.id.action_sobre)
         itemSobre?.isVisible = false
-
         return true
     }
 

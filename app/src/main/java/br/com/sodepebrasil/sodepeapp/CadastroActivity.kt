@@ -1,154 +1,84 @@
 package br.com.sodepebrasil.sodepeapp
 
+import android.content.Context
 import android.content.Intent
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
 import android.support.v7.app.ActionBarDrawerToggle
+import android.support.v7.app.AlertDialog
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.ImageView
+import android.widget.TextView
 import android.widget.Toast
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_cadastro_conteudo.*
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
 
-class CadastroActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            R.id.nav_home -> {
-
-                //Código para as outras telas
-                this.finish()
-                val intent = Intent(this, login::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_novo -> {
-                //É a activity atual
-                Toast.makeText(this, "Você já está em Cadastro", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_funcao1 -> {
-                val intent = Intent(this, Funcao1Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_funcao2 -> {
-                val intent = Intent(this, Funcao2Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_funcao3 -> {
-                val intent = Intent(this, Funcao3Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_mensagens -> {
-                Toast.makeText(this, "Clicou Mensagens", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_localizacao -> {
-                Toast.makeText(this, "Clicou Localização", Toast.LENGTH_SHORT).show()
-            }
-            // Função do Botão Configurações na NavDrawer.
-            R.id.nav_configuracoes -> {
-                val intent = Intent(this, ConfiguracoesActivity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            //Chama a função
-            R.id.nav_sair -> {
-                onBackPressed()
-            }
-        }
-        // Fecha a NavDrawer
-        layoutMenuLateral.closeDrawer(GravityCompat.START)
-        return true
-    }
+class CadastroActivity : AppCompatActivity() {
+    // Variável de Contexto
+    private val context: Context get() = this
+    // Variável de conteudo dos cards nula
+    var conteudo: Conteudo? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_cadastro)
 
+        // configurar título com nome da Conteudo e botão de voltar da Toobar
         // colocar toolbar
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Configura a NavDrawer
-        configuraMenuLateral()
+        // alterar título da ActionBar
+        supportActionBar?.title = "Novo cadastro"
 
-        // Seleciona o item na NavDrawer
-        var navigationView = menu_lateral
-        navigationView.setCheckedItem(R.id.nav_novo)
+        // up navigation
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
+        //Validação dos campos e salvamento do novo cadastro
+        salvarConteudo.setOnClickListener {
+            val conteudo = Conteudo()
+            conteudo.nome = nomeConteudo.text.toString()
+            conteudo.ementa = ementaConteudo.text.toString()
+            conteudo.professor = professorConteudo.text.toString()
+            conteudo.foto = urlFoto.text.toString()
+
+            //Validação dos campos
+            if (nomeConteudo.text.toString() == "" || ementaConteudo.text.toString() == "" || professorConteudo.text.toString() == "" || urlFoto.text.toString() == "") {
+                Toast.makeText(context, "Digite todos os campos.", Toast.LENGTH_LONG).show()
+            }else {
+                // passa as informações para o metodo taskAtualizar
+                taskAtualizar(conteudo)
+            }
+        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // infla o menu com os botões da ActionBar
-        menuInflater.inflate(R.menu.menu_main, menu)
-
-        //Nomeia a tela.
-        supportActionBar?.title = "Cadastro"
-
-        //Habilita o botão voltar.
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        //Esconde as opções não necessárias na Action Bar.
-        //Botão Atualizar.
-        val itemAtualizar = menu?.findItem(R.id.action_atualizar)
-        itemAtualizar?.isVisible = false
-        //Botão Configuração.
-        val itemConfig = menu?.findItem(R.id.action_config)
-        itemConfig?.isVisible = false
-        //Botão Buscar.
-        val itemBuscar = menu?.findItem(R.id.action_buscar)
-        itemBuscar?.isVisible = false
-        //Botão Sobre.
-        val itemSobre = menu?.findItem(R.id.action_sobre)
-        itemSobre?.isVisible = false
-
-        return true
+    // Metodo que salva as informações no banco
+    private fun taskAtualizar(conteudo: Conteudo) {
+        // Thread para salvar o conteudo
+        Thread {
+            ConteudoService.save(conteudo)
+            runOnUiThread {
+                // após cadastrar, voltar para activity anterior
+                finish()
+            }
+        }.start()
     }
 
+    // Seleção de item no menu
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         // id do item clicado
         val id = item?.itemId
-        // verificar qual item foi clicado e mostrar a mensagem
-        //Toast na tela
-        // a comparação é feita com o recurso de id definido no xml
-
-        //Caso seja o botão voltar.
+        // verificar qual item foi clicado
+        // remover a conteudo no WS
         if (id == android.R.id.home) {
             finish()
         }
         return super.onOptionsItemSelected(item)
-    }
-
-    private fun configuraMenuLateral() {
-        var toolbar = toolbar
-        var menuLateral = layoutMenuLateral
-
-        var toogle = ActionBarDrawerToggle(
-                this,
-                menuLateral,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        )
-
-        menuLateral.addDrawerListener(toogle)
-        toogle.syncState()
-
-        var navigationView = menu_lateral
-        navigationView.setNavigationItemSelectedListener(this)
-    }
-
-    //Função para confirmação de saida.
-    override fun onBackPressed() {
-        if (layoutMenuLateral.isDrawerOpen(GravityCompat.START)) {
-            layoutMenuLateral.closeDrawer(GravityCompat.START)
-        }
-        var navigationView = menu_lateral
-        navigationView.setCheckedItem(R.id.nav_home)
-        this.finish()
     }
 }

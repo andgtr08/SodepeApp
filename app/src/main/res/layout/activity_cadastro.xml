@@ -7,7 +7,8 @@
     android:layout_height="match_parent"
     android:id="@+id/layoutMenuLateral"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".CadastroActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -23,29 +24,61 @@
             android:fillViewport="true"
             android:padding="10dp">
 
-            <RelativeLayout
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/textViewCadastro"
+                <EditText
+                    android:id="@+id/nomeConteudo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Tela de Cadastro" />
-            </RelativeLayout>
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="Nome"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ementaConteudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="150dp"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="Ementa"
+                    android:inputType="textMultiLine" />
+
+                <EditText
+                    android:id="@+id/professorConteudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="Professor"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/urlFoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:ems="10"
+                    android:hint="URL Foto"
+                    android:inputType="textPersonName" />
+
+                <Button
+                    android:id="@+id/salvarConteudo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginLeft="80dp"
+                    android:layout_marginTop="10dp"
+                    android:layout_marginRight="80dp"
+                    android:background="@drawable/button_style"
+                    android:gravity="center"
+                    android:text="salvar"
+                    android:textColor="@android:color/background_light" />
+
+            </LinearLayout>
         </ScrollView>
-
     </LinearLayout>
-
-    <android.support.design.widget.NavigationView
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:id="@+id/menu_lateral"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/menu_lateral_cabecalho"
-        app:menu="@menu/menu_lateral">
-
-    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

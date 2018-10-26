@@ -1,27 +1,26 @@
 package br.com.sodepebrasil.sodepeapp
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.app.ProgressDialog
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.SearchView
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.toolbar.*
-import android.content.DialogInterface
-import android.support.v4.widget.DrawerLayout
-
+import android.support.v7.widget.DefaultItemAnimator
+import android.support.v7.widget.LinearLayoutManager
+import android.support.v7.widget.RecyclerView
 
 
 
@@ -84,15 +83,24 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
 
     //Transforma this em variável Contexto.
     private val context: Context get() = this
+    private var conteudos = listOf<Conteudo>()
+    var recyclerConteudos: RecyclerView? = null
+    private var REQUEST_CADASTRO = 1
+    private var REQUEST_REMOVE= 2
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // ------- Código antigo com as ações do sistema ------ //
+        /*
         //Variáveis de função dos Botões.
         var botaoFuncao1 = buttonFuncao1
         var botaoFuncao2 = buttonFuncao2
         var botaoFuncao3 = buttonFuncao3
         var botaoFloat = FloatButton
+
 
         //Função quando o botão é pressionado.
         botaoFuncao1.setOnClickListener() {
@@ -126,11 +134,76 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             startActivityForResult(intent, 1)
         }
 
+        // ------------------------------------------------------//
+        */
+
+        /*
+
+        val swipeLayout = findViewById<SwipeRefreshLayout>(R.id.swipe_container)
+
+        swipeLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
+            swipeLayout.isRefreshing = true
+            val handler = Handler()
+            val postDelayed = handler.postDelayed(Runnable {
+                run {
+                    swipeLayout.isRefreshing = false
+                }
+            }, 5000)
+
+        })
+        swipeLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED)
+
+        */
+
         // colocar toolbar
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
         configuraMenuLateral()
+
+        // configurar cardview
+        recyclerConteudos = findViewById<RecyclerView>(R.id.recyclerConteudos)
+        recyclerConteudos?.layoutManager = LinearLayoutManager(context)
+        recyclerConteudos?.itemAnimator = DefaultItemAnimator()
+        recyclerConteudos?.setHasFixedSize(true)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // task para recuperar as conteudos
+        taskConteudos()
+    }
+
+    fun taskConteudos() {
+        // Criar a Thread
+
+        Thread {
+            // Código para procurar as conteudos
+            // que será executado em segundo plano / Thread separada
+            this.conteudos = ConteudoService.getConteudos(context)
+            runOnUiThread {
+                // Código para atualizar a UI com a lista de conteudos
+                recyclerConteudos?.adapter = ConteudoAdapter(this.conteudos) { onClickConteudo(it) }
+                enviaNotificacao(this.conteudos.get(0))
+            }
+        }.start()
+    }
+
+    fun enviaNotificacao(conteudo: Conteudo) {
+        // Intent para abrir tela quando clicar na notificação
+        val intent = Intent(this, ConteudoActivity::class.java)
+        // parâmetros extras
+        intent.putExtra("conteudo", conteudo)
+        // Disparar notificação
+        NotificationUtil.create(this, 1, intent, "Sodepe Brasil", "Você tem nova atividade em ${conteudo.nome}")
+    }
+
+
+    // tratamento do evento de clicar em uma conteudo
+    fun onClickConteudo(conteudo: Conteudo) {
+        val intent = Intent(context, ConteudoActivity::class.java)
+        intent.putExtra("conteudo", conteudo)
+        startActivityForResult(intent, REQUEST_REMOVE)
     }
 
     // função que cria o menu na Actionbar.
@@ -178,18 +251,27 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             Toast.makeText(context, "Botão de buscar",
                     Toast.LENGTH_LONG).show()
         }
+
+        //Caso selecionado o botão Adicionar.
+        else if (id == R.id.action_adicionar) {
+            val intent = Intent(context, CadastroActivity::class.java)
+            //Inicia a activity com os parametros da variável "params"
+            startActivityForResult(intent, 1)
+        }
+
         //Caso selecionado o botão Atualizar.
         else if (id == R.id.action_atualizar) {
             val dialog = ProgressDialog.show(this, "", "Atualizando...", true)
             dialog.show()
             val handler = Handler()
             handler.postDelayed({ dialog.dismiss()
-                Toast.makeText(context, "Atualização completa.", Toast.LENGTH_LONG).show()}, 10000) // Delay de 10 Segundos
+                taskConteudos()}, 1000) // Delay de 1 Segundos
         }
         //Caso selecionado o botão Voltar.
         else if (id == android.R.id.home) {
             finish()
         }
+
         //Caso selecionado o botão Sobre.
         else if (id == R.id.action_sobre) {
             val intent = Intent(context, SobreActivity::class.java)
@@ -232,5 +314,13 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
 
         var navigationView = menu_lateral
         navigationView.setNavigationItemSelectedListener(this)
+    }
+
+    // esperar o retorno do cadastro da conteudo
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_CADASTRO || requestCode == REQUEST_REMOVE ) {
+            // atualizar lista de conteudos
+            taskConteudos()
+        }
     }
 }
