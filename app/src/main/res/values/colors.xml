@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#FFB31D</color>
+    <color name="colorPrimary">#ffb31d</color>
     <color name="colorPrimaryDark">#bf8614</color>
     <color name="colorAccent">#000000</color>
+    <color name="colorBackgroundMain">#e9e9e9</color>
 </resources>
     <!-- Cor antiga = #ff8800 -->
 

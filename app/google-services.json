@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "957702150876",
+    "firebase_url": "https://sodepeapp.firebaseio.com",
+    "project_id": "sodepeapp",
+    "storage_bucket": "sodepeapp.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:957702150876:android:047854580f1abb5f",
+        "android_client_info": {
+          "package_name": "br.com.sodepebrasil.sodepeapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "957702150876-r1a3ajg44k3pbktr1skr7hsjgleepuir.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAWD9jvHzQC2NWrD2wuFHQ4BHXaPUGUuzs"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

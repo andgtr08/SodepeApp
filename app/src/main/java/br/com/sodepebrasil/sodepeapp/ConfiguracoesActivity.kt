@@ -63,18 +63,20 @@ class ConfiguracoesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
 
         }
+        // Fecha o menu lateral
         layoutMenuLateral.closeDrawer(GravityCompat.START)
         return true
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_cadastro)
+        setContentView(R.layout.activity_configuracoes)
 
         // colocar toolbar
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
+        // Configura menu lateral
         configuraMenuLateral()
 
         var navigationView = menu_lateral
@@ -122,6 +124,7 @@ class ConfiguracoesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         return super.onOptionsItemSelected(item)
     }
 
+    // Metodo que inicia o menu lateral
     private fun configuraMenuLateral() {
         var toolbar = toolbar
         var menuLateral = layoutMenuLateral
