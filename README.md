@@ -2,7 +2,7 @@
 <html>
 <body>
 
-<h2>UNITEC - SODEPE Brasil Mobile App</h2>
+<h2>SODEPE Brasil - Mobile App</h2>
 <table>
   <tr>
     <td>Blenda Bomfim</td>
