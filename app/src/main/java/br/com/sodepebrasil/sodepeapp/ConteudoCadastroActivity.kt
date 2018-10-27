@@ -17,7 +17,8 @@ class ConteudoCadastroActivity : AppCompatActivity() {
             conteudo.ementa = ementaConteudo.text.toString()
             conteudo.professor = professorConteudo.text.toString()
             conteudo.foto = urlFoto.text.toString()
-            taskAtualizar(conteudo)
+            // taskAtualizar(conteudo)
+            finish()
         }
     }
 

@@ -87,7 +87,6 @@ class ConteudoAdapter (
                             }
                         })
             }
-
         }
 
         // adiciona evento de clique

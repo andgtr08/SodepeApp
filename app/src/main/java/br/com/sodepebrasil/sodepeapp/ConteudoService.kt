@@ -6,9 +6,8 @@ import com.google.gson.reflect.TypeToken
 
 object ConteudoService {
 
-    //TROQUE PELO IP DE ONDE ESTÁ O WS
+    //Endereço do servidor WS
     val host = "http://andgtr08.pythonanywhere.com"
-    //val host = "http://192.168.10.70:5000"
     val TAG = "WS_LMSApp"
 
     // Metodo que carrega o conteudo, baseando-se na conexão com a internet.
@@ -63,7 +62,9 @@ object ConteudoService {
         if (! existeConteudo(conteudo)) {
             dao.insert(conteudo)
         }
+
         return true
+
     }
 
     // Metodo que verifica se o conteudo existe no banco.
