@@ -63,7 +63,6 @@ class ConfiguracoesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
             }
 
         }
-        // Fecha o menu lateral
         layoutMenuLateral.closeDrawer(GravityCompat.START)
         return true
     }
@@ -76,7 +75,6 @@ class ConfiguracoesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        // Configura menu lateral
         configuraMenuLateral()
 
         var navigationView = menu_lateral
@@ -124,7 +122,6 @@ class ConfiguracoesActivity : AppCompatActivity(), NavigationView.OnNavigationIt
         return super.onOptionsItemSelected(item)
     }
 
-    // Metodo que inicia o menu lateral
     private fun configuraMenuLateral() {
         var toolbar = toolbar
         var menuLateral = layoutMenuLateral

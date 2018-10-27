@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.widget.ImageView
 import android.widget.TextView
 import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.activity_conteudo.*
 
 class ConteudoActivity : AppCompatActivity() {
     private val context: Context get() = this
@@ -37,8 +38,6 @@ class ConteudoActivity : AppCompatActivity() {
         var texto = findViewById<TextView>(R.id.nomeConteudo)
         texto.text = conteudo?.nome
         var imagem = findViewById<ImageView>(R.id.imagemConteudo)
-        // var imagemOffline = findViewById<ImageView>(R.id.imagemConteudoOffline)
-
         // Verifica se tem internet, e baixa a imagem do cardBox
         if (AndroidUtils.isInternetDisponivel(LMSApplication.getInstance().applicationContext)) {
             Picasso.with(this).load(conteudo?.foto).fit().into(imagem,
@@ -56,8 +55,6 @@ class ConteudoActivity : AppCompatActivity() {
                         override fun onError() { }
                     })
         }
-
-        // Carrega campo ementa
         var ementa = findViewById<TextView>(R.id.nomeEmenta)
         ementa.text = conteudo?.ementa
     }

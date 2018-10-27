@@ -6,11 +6,9 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
 import android.content.Intent
-import android.graphics.Color
 import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
-import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.app.ActionBarDrawerToggle
 import android.support.v7.widget.Toolbar
 import android.view.Menu
@@ -21,8 +19,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-
-
 
 
 class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -93,7 +89,6 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        // ------- Código antigo com as ações do sistema ------ //
         /*
         //Variáveis de função dos Botões.
         var botaoFuncao1 = buttonFuncao1
@@ -133,25 +128,6 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             //Inicia a activity com os parametros da variável "params"
             startActivityForResult(intent, 1)
         }
-
-        // ------------------------------------------------------//
-        */
-
-        /*
-
-        val swipeLayout = findViewById<SwipeRefreshLayout>(R.id.swipe_container)
-
-        swipeLayout.setOnRefreshListener(SwipeRefreshLayout.OnRefreshListener {
-            swipeLayout.isRefreshing = true
-            val handler = Handler()
-            val postDelayed = handler.postDelayed(Runnable {
-                run {
-                    swipeLayout.isRefreshing = false
-                }
-            }, 5000)
-
-        })
-        swipeLayout.setColorSchemeColors(Color.BLUE, Color.GREEN, Color.RED)
 
         */
 
@@ -197,7 +173,6 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         // Disparar notificação
         NotificationUtil.create(this, 1, intent, "Sodepe Brasil", "Você tem nova atividade em ${conteudo.nome}")
     }
-
 
     // tratamento do evento de clicar em uma conteudo
     fun onClickConteudo(conteudo: Conteudo) {
