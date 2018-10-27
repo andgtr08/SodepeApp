@@ -8,12 +8,12 @@
     <item android:id="@+id/action_buscar"
         android:icon="@drawable/ic_buscar_white"
         android:title="@string/action_buscar"
-        app:showAsAction="always"
+        app:showAsAction="never"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item android:id="@+id/action_atualizar"
         android:icon="@drawable/ic_atualizar_white"
         android:title="@string/action_atualizar"
-        app:showAsAction="ifRoom" />
+        app:showAsAction="always" />
     <item android:id="@+id/action_config"
         android:title="@string/action_config"
         app:showAsAction="never" />

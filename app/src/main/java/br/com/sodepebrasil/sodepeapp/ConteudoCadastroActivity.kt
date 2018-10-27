@@ -2,6 +2,7 @@ package br.com.sodepebrasil.sodepeapp
 
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_cadastro_conteudo.*
 
 class ConteudoCadastroActivity : AppCompatActivity() {
@@ -18,6 +19,8 @@ class ConteudoCadastroActivity : AppCompatActivity() {
             conteudo.professor = professorConteudo.text.toString()
             conteudo.foto = urlFoto.text.toString()
             // taskAtualizar(conteudo)
+            ConteudoService.save(conteudo)
+            Toast.makeText(this, "Cadastro efetuado com sucesso!", Toast.LENGTH_SHORT).show()
             finish()
         }
     }

@@ -56,7 +56,6 @@ class ConteudoAdapter (
         val conteudo = conteudos[position]
 
         // atualizar dados de conteudo
-
         holder.cardNome.text = conteudo.nome
         holder.cardProgress.visibility = View.VISIBLE
 
