@@ -230,6 +230,7 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
 
         //Caso selecionado o botão Adicionar.
         else if (id == R.id.action_adicionar) {
+            taskConteudos()
             val intent = Intent(context, CadastroActivity::class.java)
             //Inicia a activity com os parametros da variável "params"
             startActivityForResult(intent, 1)
