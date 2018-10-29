@@ -83,6 +83,7 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
     var recyclerConteudos: RecyclerView? = null
     private var REQUEST_CADASTRO = 1
     private var REQUEST_REMOVE= 2
+    // var botaoFloat = FloatButton
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,16 +121,16 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             //Inicia a activity com os parametros da variável "params"
             startActivityForResult(intent, 1)
         }
+        */
 
         //Função do Botão Flutuante de cadastro.
-        botaoFloat.setOnClickListener(){
+        FloatButton.setOnClickListener(){
             //Abre uma nota tela.
             val intent = Intent(context, CadastroActivity::class.java)
             //Inicia a activity com os parametros da variável "params"
             startActivityForResult(intent, 1)
         }
 
-        */
 
         // colocar toolbar
         var toolbar = findViewById<Toolbar>(R.id.toolbar)

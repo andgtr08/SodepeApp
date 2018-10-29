@@ -4,11 +4,11 @@
     <item android:id="@+id/action_adicionar"
         android:title="@string/action_adicionar"
         android:icon="@drawable/ic_add_white"
-        app:showAsAction="always" />
+        app:showAsAction="never" />
     <item android:id="@+id/action_buscar"
         android:icon="@drawable/ic_buscar_white"
         android:title="@string/action_buscar"
-        app:showAsAction="never"
+        app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView"/>
     <item android:id="@+id/action_atualizar"
         android:icon="@drawable/ic_atualizar_white"

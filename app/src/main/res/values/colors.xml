@@ -3,7 +3,8 @@
     <color name="colorPrimary">#ffb31d</color>
     <color name="colorPrimaryDark">#bf8614</color>
     <color name="colorAccent">#000000</color>
-    <color name="colorBackgroundMain">#e9e9e9</color>
+    <color name="colorBackgroundMain">#ffb31d</color>
+    <color name="colorFloatButton">#ffb31d</color>
 </resources>
     <!-- Cor antiga = #ff8800 -->
 
