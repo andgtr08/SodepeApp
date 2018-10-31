@@ -27,7 +27,6 @@ object ConteudoService {
             val conteudos = dao.findAll()
             return conteudos
         }
-
     }
 
     // Metodo que carrega o conteudo, baseando-se na conexão com a internet, com a entrada do ID do conteudo
@@ -62,7 +61,6 @@ object ConteudoService {
         if (! existeConteudo(conteudo)) {
             dao.insert(conteudo)
         }
-
         return true
 
     }
