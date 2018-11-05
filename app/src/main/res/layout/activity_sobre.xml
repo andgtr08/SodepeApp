@@ -30,15 +30,8 @@ android:orientation="vertical">
                 android:id="@+id/imageViewSobreLogo"
                 android:layout_width="match_parent"
                 android:layout_height="157dp"
-                android:layout_marginTop="20dp"
                 app:srcCompat="@drawable/logo" />
 
-            <TextView
-                android:id="@+id/textViewSobre"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="Um pouco sobre a empresa e contatos."/>
         </RelativeLayout>
     </ScrollView>
 

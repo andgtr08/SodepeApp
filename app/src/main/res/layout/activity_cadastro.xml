@@ -1,5 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
@@ -35,7 +34,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:ems="10"
-                    android:hint="Nome"
+                    android:hint="Título"
                     android:inputType="textPersonName" />
 
                 <EditText
@@ -44,7 +43,7 @@
                     android:layout_height="150dp"
                     android:layout_marginBottom="5dp"
                     android:ems="10"
-                    android:hint="Ementa"
+                    android:hint="Descrição"
                     android:inputType="textMultiLine" />
 
                 <EditText
@@ -53,7 +52,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="5dp"
                     android:ems="10"
-                    android:hint="Professor"
+                    android:hint="Responsável"
                     android:inputType="textPersonName" />
 
                 <EditText

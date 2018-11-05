@@ -10,6 +10,7 @@
         android:id="@+id/iv_logo"
         android:layout_width="360dp"
         android:layout_height="wrap_content"
+        android:contentDescription="Logo Sodepe"
         android:src="@drawable/logo"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"

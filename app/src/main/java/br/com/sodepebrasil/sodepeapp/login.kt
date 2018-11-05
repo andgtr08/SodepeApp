@@ -21,6 +21,8 @@ import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 
 
+
+
 class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId){
@@ -47,21 +49,8 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
                 //Inicia a activity com os parametros da variável "params"
                 startActivityForResult(intent, 1)
             }
-            R.id.nav_funcao2 -> {
-                val intent = Intent(context, Funcao2Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_funcao3 -> {
-                val intent = Intent(context, Funcao3Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
             R.id.nav_mensagens -> {
                 Toast.makeText(this, "Clicou Mensagens", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_localizacao -> {
-                Toast.makeText(this, "Clicou Localização", Toast.LENGTH_SHORT).show()
             }
             // Função do Botão Configurações na NavDrawer.
             R.id.nav_configuracoes -> {
@@ -143,6 +132,10 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         recyclerConteudos?.layoutManager = LinearLayoutManager(context)
         recyclerConteudos?.itemAnimator = DefaultItemAnimator()
         recyclerConteudos?.setHasFixedSize(true)
+
+        swiperefresh.setOnRefreshListener {
+            loadItems()
+        }
     }
 
     override fun onResume() {
@@ -151,9 +144,26 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         taskConteudos()
     }
 
+    fun loadItems() {
+        // Carregue os itens e retorna mensagem de sucesso.
+
+        val handler = Handler()
+        handler.postDelayed({ onItemsLoadComplete()
+            taskConteudos()
+            Toast.makeText(this, "Conteudos atualizados com sucesso", Toast.LENGTH_SHORT).show()
+        }, 1000) // Delay de 1 Segundos
+    }
+
+    // Ao atualizar os items do refresh
+    fun onItemsLoadComplete() {
+        // Atualize o adapter e notifique que os dados mudaram
+
+        // Pare o refresh animation
+        swiperefresh.isRefreshing = false
+    }
+
     fun taskConteudos() {
         // Criar a Thread
-
         Thread {
             // Código para procurar as conteudos
             // que será executado em segundo plano / Thread separada
@@ -161,7 +171,7 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             runOnUiThread {
                 // Código para atualizar a UI com a lista de conteudos
                 recyclerConteudos?.adapter = ConteudoAdapter(this.conteudos) { onClickConteudo(it) }
-                enviaNotificacao(this.conteudos.get(0))
+                // enviaNotificacao(this.conteudos.get(0))
             }
         }.start()
     }
@@ -187,7 +197,7 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         // infla o menu com os botões da ActionBar
         menuInflater.inflate(R.menu.menu_main, menu)
         //Renomeia a Actionbar
-        supportActionBar?.title = "Tela Inicial"
+        supportActionBar?.title = "Eventos"
         //Habilita o botão voltar.
         supportActionBar?.setDisplayHomeAsUpEnabled(false)
 
