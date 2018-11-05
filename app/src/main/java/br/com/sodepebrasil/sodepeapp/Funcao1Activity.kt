@@ -34,21 +34,8 @@ class Funcao1Activity : AppCompatActivity(), NavigationView.OnNavigationItemSele
                 //Inicia a activity com os parametros da variável "params"
                 startActivityForResult(intent, 1)
             }
-            R.id.nav_funcao2 -> {
-                val intent = Intent(this, Funcao2Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_funcao3 -> {
-                val intent = Intent(this, Funcao3Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
             R.id.nav_mensagens -> {
                 Toast.makeText(this, "Clicou Mensagens", Toast.LENGTH_SHORT).show()
-            }
-            R.id.nav_localizacao -> {
-                Toast.makeText(this, "Clicou Localização", Toast.LENGTH_SHORT).show()
             }
             // Função do Botão Configurações na NavDrawer.
             R.id.nav_configuracoes -> {

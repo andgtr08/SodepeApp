@@ -35,7 +35,7 @@ class CadastroActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         // alterar título da ActionBar
-        supportActionBar?.title = "Novo cadastro"
+        supportActionBar?.title = "Novo evento"
 
         // up navigation
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -54,6 +54,7 @@ class CadastroActivity : AppCompatActivity() {
             }else {
                 // passa as informações para o metodo taskAtualizar
                 taskAtualizar(conteudo)
+                Toast.makeText(this, "Evento cadastrado com sucesso", Toast.LENGTH_SHORT).show()
             }
         }
     }

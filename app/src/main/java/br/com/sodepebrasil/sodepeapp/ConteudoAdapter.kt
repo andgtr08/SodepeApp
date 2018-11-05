@@ -27,9 +27,7 @@ class ConteudoAdapter (
             cardImg = view.findViewById<ImageView>(R.id.cardImg)
             cardProgress = view.findViewById<ProgressBar>(R.id.cardProgress)
             cardView = view.findViewById<CardView>(R.id.card_conteudos)
-
         }
-
     }
 
     // Quantidade de conteudos na lista

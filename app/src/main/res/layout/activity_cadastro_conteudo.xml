@@ -20,7 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="150dp"
         android:ems="10"
-        android:hint="Ementa"
+        android:hint="Descrição"
         android:inputType="textMultiLine" />
 
     <EditText
@@ -28,7 +28,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Professor"
+        android:hint="Responsável"
         android:inputType="textPersonName" />
 
     <EditText
