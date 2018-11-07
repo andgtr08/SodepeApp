@@ -57,6 +57,34 @@ class ConteudoAdapter (
         holder.cardNome.text = conteudo.nome
         holder.cardProgress.visibility = View.VISIBLE
 
+        // Carregando imagem do card, baseando na conexão de internet
+        if (conteudo.foto == "") {
+            if (AndroidUtils.isInternetDisponivel(LMSApplication.getInstance().applicationContext)) {
+                Picasso.with(context).load(R.drawable.ic_empty_background).fit().into(holder.cardImg,
+                        object : com.squareup.picasso.Callback {
+                            override fun onSuccess() {
+                                holder.cardProgress.visibility = View.GONE
+                            }
+
+                            override fun onError() {
+                                holder.cardProgress.visibility = View.GONE
+                            }
+                        })
+            }else {
+                Picasso.with(context).load(R.drawable.ic_card_backgroud).fit().into(holder.cardImg,
+                        object : com.squareup.picasso.Callback {
+                            override fun onSuccess() {
+                                holder.cardProgress.visibility = View.GONE
+                            }
+
+                            override fun onError() {
+                                holder.cardProgress.visibility = View.GONE
+                            }
+                        })
+            }
+
+        }
+
         // download da imagem
         if (conteudo.foto != "") {
             // Caso tenha acesso a internet, baixa do servidor.
@@ -72,17 +100,30 @@ class ConteudoAdapter (
                             }
                         })
             }else {
-                // Caso não tenha acesso a internet, carrega a imagem local.
-                Picasso.with(context).load(R.drawable.ic_card_backgroud).fit().into(holder.cardImg,
-                        object : com.squareup.picasso.Callback {
-                            override fun onSuccess() {
-                                holder.cardProgress.visibility = View.GONE
-                            }
+                if (conteudo.foto == "") {
+                    Picasso.with(context).load(R.drawable.ic_card_backgroud).fit().into(holder.cardImg,
+                            object : com.squareup.picasso.Callback {
+                                override fun onSuccess() {
+                                    holder.cardProgress.visibility = View.GONE
+                                }
 
-                            override fun onError() {
-                                holder.cardProgress.visibility = View.GONE
-                            }
-                        })
+                                override fun onError() {
+                                    holder.cardProgress.visibility = View.GONE
+                                }
+                            })
+                }else {
+                    // Caso não tenha acesso a internet, carrega a imagem local.
+                    Picasso.with(context).load(R.drawable.ic_card_backgroud).fit().into(holder.cardImg,
+                            object : com.squareup.picasso.Callback {
+                                override fun onSuccess() {
+                                    holder.cardProgress.visibility = View.GONE
+                                }
+
+                                override fun onError() {
+                                    holder.cardProgress.visibility = View.GONE
+                                }
+                            })
+                }
             }
         }
 

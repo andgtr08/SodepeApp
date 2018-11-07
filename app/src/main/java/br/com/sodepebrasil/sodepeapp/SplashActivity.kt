@@ -1,6 +1,8 @@
 package br.com.sodepebrasil.sodepeapp
 
+import android.Manifest
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -9,10 +11,11 @@ import android.view.animation.AnimationUtils
 import kotlinx.android.synthetic.main.splash_main.*
 import android.view.WindowManager
 import android.os.Build
-
+import android.support.v4.app.ActivityCompat
 
 
 class SplashActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.splash_main)

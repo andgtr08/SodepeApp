@@ -1,6 +1,5 @@
 <android.support.v4.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
 xmlns:app="http://schemas.android.com/apk/res-auto"
-xmlns:tools="http://schemas.android.com/tools"
 android:layout_width="match_parent"
 android:layout_height="match_parent"
 android:id="@+id/layoutMenuLateral"
@@ -23,28 +22,94 @@ android:orientation="vertical">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="vertical">
 
             <ImageView
                 android:id="@+id/imageViewSobreLogo"
+                android:contentDescription="@string/imageViewSobreLogoText"
                 android:layout_width="match_parent"
                 android:layout_height="157dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
                 app:srcCompat="@drawable/logo" />
 
+            <TextView
+                android:id="@+id/copyrightText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_marginBottom="3dp"
+                android:text="@string/copyright" />
+
+            <TextView
+                android:id="@+id/textEndereco"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/imageViewSobreLogo"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="11dp"
+                android:layout_marginTop="6dp"
+                android:text="@string/enderecoText"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textEnderecoConteudo"
+                android:layout_width="157dp"
+                android:layout_height="74dp"
+                android:layout_below="@+id/textEndereco"
+                android:layout_alignStart="@+id/textEndereco"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="4dp"
+                android:text="@string/enderecoTextConteudo" />
+
+            <TextView
+                android:id="@+id/textContato"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignStart="@+id/textEnderecoConteudo"
+                android:layout_alignBottom="@+id/textEnderecoConteudo"
+                android:layout_marginStart="1dp"
+                android:layout_marginBottom="-38dp"
+                android:text="@string/contatoText"
+                android:textSize="22sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/textContatoConteudo"
+                android:layout_width="199dp"
+                android:layout_height="52dp"
+                android:layout_below="@+id/textContato"
+                android:layout_alignStart="@+id/textContato"
+                android:layout_marginStart="-2dp"
+                android:layout_marginTop="46dp"
+                android:text="@string/contatoTextConteudo" />
+
+            <ImageView
+                android:id="@+id/imageMap"
+                android:contentDescription="@string/imageMapText"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_alignTop="@+id/textEnderecoConteudo"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="50dp"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_location_on_black" />
+
+            <ImageView
+                android:id="@+id/imageCall"
+                android:contentDescription="@string/imageCallText"
+                android:layout_width="43dp"
+                android:layout_height="43dp"
+                android:layout_alignStart="@+id/imageMap"
+                android:layout_alignTop="@+id/textContatoConteudo"
+                android:clickable="true"
+                android:focusable="true"
+                app:srcCompat="@drawable/ic_call_on_black" />
         </RelativeLayout>
     </ScrollView>
-
 </LinearLayout>
-
-<android.support.design.widget.NavigationView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:id="@+id/menu_lateral"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/menu_lateral_cabecalho"
-    app:menu="@menu/menu_lateral">
-
-</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

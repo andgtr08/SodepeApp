@@ -1,5 +1,6 @@
 package br.com.sodepebrasil.sodepeapp
 
+import android.Manifest
 import android.app.Activity
 import android.content.Context
 import android.content.Intent
@@ -10,11 +11,13 @@ import android.widget.*
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_main.*
 import android.app.ProgressDialog
+import android.content.pm.PackageManager
 import android.graphics.Color
 import android.os.Handler
 import android.view.Window
 import android.view.WindowManager
 import android.os.Build
+import android.support.v4.app.ActivityCompat
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,6 +32,10 @@ class MainActivity : AppCompatActivity() {
         supportActionBar?.setDisplayShowTitleEnabled(false)
 
         window.statusBarColor = Color.WHITE
+
+        // Verifica as permissões do app
+        val PERMISSIONS = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.CALL_PHONE)
+        ActivityCompat.requestPermissions(this, PERMISSIONS, 555)
 
         // procurar pelas preferências, se pediu para guardar usuário e senha
         var lembrar = Prefs.getBoolean("lembrar")

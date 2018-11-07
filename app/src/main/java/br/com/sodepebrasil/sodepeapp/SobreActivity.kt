@@ -1,6 +1,8 @@
 package br.com.sodepebrasil.sodepeapp
 
+import android.Manifest
 import android.content.Intent
+import android.net.Uri
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.support.design.widget.NavigationView
@@ -11,46 +13,20 @@ import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import kotlinx.android.synthetic.main.activity_main.*
+import kotlinx.android.synthetic.main.activity_sobre.*
 import kotlinx.android.synthetic.main.toolbar.*
+import android.content.pm.PackageManager
+import com.google.android.gms.common.wrappers.Wrappers.packageManager
+import com.google.android.gms.common.util.ClientLibraryUtils.getPackageInfo
+import android.support.v4.app.ActivityCompat
+import android.Manifest.permission
+import android.Manifest.permission.CALL_PHONE
 
-class SobreActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
-    override fun onNavigationItemSelected(item: MenuItem): Boolean {
-        when (item.itemId){
-            R.id.nav_home -> {
 
-                //Código para as outras telas
-                this.finish()
-                val intent = Intent(this, login::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_novo -> {
-                val intent = Intent(this, CadastroActivity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_funcao1 -> {
-                val intent = Intent(this, Funcao1Activity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_mensagens -> {
-                Toast.makeText(this, "Clicou Mensagens", Toast.LENGTH_SHORT).show()
-            }
-            // Função do Botão Configurações na NavDrawer.
-            R.id.nav_configuracoes -> {
-                val intent = Intent(this, ConfiguracoesActivity::class.java)
-                //Inicia a activity com os parametros da variável "params"
-                startActivityForResult(intent, 1)
-            }
-            R.id.nav_sair -> {
-                onBackPressed()
-            }
-        }
-        layoutMenuLateral.closeDrawer(GravityCompat.START)
-        return true
-    }
 
+
+
+class SobreActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_sobre)
@@ -59,39 +35,55 @@ class SobreActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
 
-        configuraMenuLateral()
+        // up navigation
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        var navigationView = menu_lateral
-        navigationView.setCheckedItem(R.id.nav_home)
+        // alterar título da ActionBar
+        supportActionBar?.title = "Sobre a Sodepe"
 
+        // Ao clicar na imagem do mapa
+        imageMap.setOnClickListener{
+            // Nome do pacote do Maps
+            val isAppInstalled = appInstalado("com.google.android.apps.maps")
+
+            // Verifica se o Google Maps está instalado, caso não, abre o link da PlayStore
+            if(isAppInstalled) {
+                val mapUri = Uri.parse("http://maps.google.com/maps?saddr=&daddr=-23.532035,-46.682295")
+                val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+                mapIntent.setPackage("com.google.android.apps.maps")
+                startActivity(mapIntent)
+            }else {
+                val mapUri = Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.apps.maps")
+                val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+                startActivity(mapIntent)
+                Toast.makeText(this, "Instale o Google Maps para usar esta função...", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // Ao clicar na imagem do do telefone
+        imageCall.setOnClickListener{
+            //Verifica se o usuário autorizou o uso do telefone
+            if (ActivityCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
+                val intent = Intent(Intent.ACTION_CALL, Uri.parse("tel:" + "11 3872-7485"))
+                startActivity(intent)
+            } else {
+                // Caso não, pede autorização para o usuario.
+                val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.CALL_PHONE)
+                ActivityCompat.requestPermissions(this, PERMISSIONS_STORAGE, 9)
+            }
+        }
     }
 
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        // infla o menu com os botões da ActionBar
-        menuInflater.inflate(R.menu.menu_main, menu)
+    // Função que verifica se o app está instalado
+    private fun appInstalado(uri: String): Boolean {
+        val pm = packageManager
+        try {
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES)
+            return true
+        } catch (e: PackageManager.NameNotFoundException) {
+        }
 
-        //Nomeia a tela.
-        supportActionBar?.title = "Sobre"
-
-        //Habilita o botão voltar.
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        //Esconde as opções não necessárias na Action Bar.
-        //Botão Atualizar.
-        val itemAtualizar = menu?.findItem(R.id.action_atualizar)
-        itemAtualizar?.isVisible = false
-        //Botão Configuração.
-        val itemConfig = menu?.findItem(R.id.action_config)
-        itemConfig?.isVisible = false
-        //Botão Buscar.
-        val itemBuscar = menu?.findItem(R.id.action_buscar)
-        itemBuscar?.isVisible = false
-        //Botão Sobre.
-        val itemSobre = menu?.findItem(R.id.action_sobre)
-        itemSobre?.isVisible = false
-        val itemAdicionar = menu?.findItem(R.id.action_adicionar)
-        itemAdicionar?.isVisible = false
-        return true
+        return false
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
@@ -108,32 +100,8 @@ class SobreActivity : AppCompatActivity(), NavigationView.OnNavigationItemSelect
         return super.onOptionsItemSelected(item)
     }
 
-    private fun configuraMenuLateral() {
-        var toolbar = toolbar
-        var menuLateral = layoutMenuLateral
-
-        var toogle = ActionBarDrawerToggle(
-                this,
-                menuLateral,
-                toolbar,
-                R.string.navigation_drawer_open,
-                R.string.navigation_drawer_close
-        )
-
-        menuLateral.addDrawerListener(toogle)
-        toogle.syncState()
-
-        var navigationView = menu_lateral
-        navigationView.setNavigationItemSelectedListener(this)
-    }
-
     //Função para confirmação de saida.
     override fun onBackPressed() {
-        if (layoutMenuLateral.isDrawerOpen(GravityCompat.START)) {
-            layoutMenuLateral.closeDrawer(GravityCompat.START)
-        }
-        var navigationView = menu_lateral
-        navigationView.setCheckedItem(R.id.nav_home)
         this.finish()
     }
 }
