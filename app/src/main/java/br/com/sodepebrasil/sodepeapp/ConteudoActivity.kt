@@ -14,6 +14,7 @@ import kotlinx.android.synthetic.main.activity_conteudo.*
 import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
+import android.net.Uri
 import android.widget.Toast
 
 
@@ -38,21 +39,25 @@ class ConteudoActivity : AppCompatActivity() {
 
         // up navigation
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        /*
-        var texto = findViewById<TextView>(R.id.nomeConteudo)
-        texto.text = conteudo?.nome
-        */
-
         var imagem = findViewById<ImageView>(R.id.imagemConteudo)
+
         // Verifica se tem internet, e baixa a imagem do cardBox
         if (AndroidUtils.isInternetDisponivel(LMSApplication.getInstance().applicationContext)) {
-            Picasso.with(this).load(conteudo?.foto).fit().into(imagem,
-                    object: com.squareup.picasso.Callback{
-                        override fun onSuccess() {}
+            if (conteudo?.foto == "") {
+                Picasso.with(this).load(R.drawable.ic_empty_background).fit().into(imagem,
+                        object: com.squareup.picasso.Callback{
+                            override fun onSuccess() {}
 
-                        override fun onError() { }
-                    })
+                            override fun onError() { }
+                        })
+            }else {
+                Picasso.with(this).load(conteudo?.foto).fit().into(imagem,
+                        object: com.squareup.picasso.Callback{
+                            override fun onSuccess() {}
+
+                            override fun onError() { }
+                        })
+            }
         }else{
             // Caso não tenha internet, carrega a imagem local
             Picasso.with(this).load(R.drawable.ic_card_backgroud).fit().into(imagem,
@@ -65,37 +70,45 @@ class ConteudoActivity : AppCompatActivity() {
         var ementa = findViewById<TextView>(R.id.nomeEmenta)
         ementa.text = conteudo?.ementa
 
+        //Função do botão Inscrever
         enviarEmail.setOnClickListener {
+            val isAppInstalled = appInstalado("com.google.android.gm")
 
-            val intent = Intent(Intent.ACTION_SEND)
-            val recipients = arrayOf("contato@sodepebrasil.com.br")
-            intent.putExtra(Intent.EXTRA_EMAIL, recipients)
-            intent.putExtra(Intent.EXTRA_SUBJECT, "Inscrição para o evento ${conteudo?.nome}")
-            intent.putExtra(Intent.EXTRA_TEXT, "")
-            intent.putExtra(Intent.EXTRA_CC, "contato@sodepebrasil.com.br")
-            intent.type = "text/html"
-            intent.setPackage("com.google.android.gm")
-            startActivity(Intent.createChooser(intent, "Enviar e-mail"))
+            if(isAppInstalled) {
+                val intent = Intent(Intent.ACTION_SEND)
+                val recipients = arrayOf("contato@sodepebrasil.com.br")
+                intent.putExtra(Intent.EXTRA_EMAIL, recipients)
+                intent.putExtra(Intent.EXTRA_SUBJECT, "Inscrição para o evento ${conteudo?.nome}")
+                intent.putExtra(Intent.EXTRA_TEXT, "")
+                intent.putExtra(Intent.EXTRA_CC, "contato@sodepebrasil.com.br")
+                intent.type = "text/html"
+                intent.setPackage("com.google.android.gm")
+                startActivity(Intent.createChooser(intent, "Enviar e-mail"))
+            }else {
+                val mapUri = Uri.parse("http://play.google.com/store/apps/details?id=com.google.android.gm")
+                val mapIntent = Intent(Intent.ACTION_VIEW, mapUri)
+                startActivity(mapIntent)
+                Toast.makeText(this, "Instale o Google Gmail para usar esta função...", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 
-    private fun checarGmail(packageName: String): Boolean {
+    // Verifica se o App está instalado no dispositivo
+    private fun appInstalado(uri: String): Boolean {
         val pm = packageManager
         try {
-            pm.getPackageInfo(packageName, PackageManager.GET_ACTIVITIES)
-            return pm.getApplicationInfo(packageName, 0).enabled
+            pm.getPackageInfo(uri, PackageManager.GET_ACTIVITIES)
+            return true
         } catch (e: PackageManager.NameNotFoundException) {
-            e.printStackTrace()
-            return false
         }
+
+        return false
     }
 
     // método sobrescrito para inflar o menu na Actionbar
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         // infla o menu com os botões da ActionBar
         menuInflater.inflate(R.menu.menu_main_conteudo, menu)
-        val itemRemover = menu?.findItem(R.id.action_remover)
-        itemRemover?.isVisible = false
         return true
     }
 

@@ -10,14 +10,15 @@
             android:title="Home" />
         <item android:id="@+id/nav_novo"
             android:icon="@drawable/ic_add_item"
-            android:title="Novo"/>
+            android:title="Novo evento"/>
         <item
             android:id="@+id/nav_funcao1"
             android:enabled="false"
             android:icon="@drawable/ic_funcao_black"
-            android:title="Função" />
+            android:title="Inscrições" />
         <item android:id="@+id/nav_mensagens"
             android:icon="@drawable/ic_chat_black"
+            android:enabled="false"
             android:title="Mensagens"/>
     </group>
 

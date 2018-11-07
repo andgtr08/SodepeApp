@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Handler
 import android.support.design.widget.NavigationView
 import android.support.v4.view.GravityCompat
@@ -19,8 +20,6 @@ import kotlinx.android.synthetic.main.toolbar.*
 import android.support.v7.widget.DefaultItemAnimator
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
-
-
 
 
 class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListener {
@@ -120,7 +119,6 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
             startActivityForResult(intent, 1)
         }
 
-
         // colocar toolbar
         var toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -128,11 +126,15 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
         configuraMenuLateral()
 
         // configurar cardview
-        recyclerConteudos = findViewById<RecyclerView>(R.id.recyclerConteudos)
+        recyclerConteudos = findViewById(R.id.recyclerConteudos)
         recyclerConteudos?.layoutManager = LinearLayoutManager(context)
         recyclerConteudos?.itemAnimator = DefaultItemAnimator()
         recyclerConteudos?.setHasFixedSize(true)
 
+        //Configuraçao do SwipeRefresh da tela
+        val primaryColorDark = Color.parseColor("#F8B109")
+        swiperefresh.setProgressBackgroundColorSchemeColor(primaryColorDark)
+        swiperefresh.setColorSchemeColors(Color.WHITE, Color.WHITE, Color.WHITE)
         swiperefresh.setOnRefreshListener {
             loadItems()
         }
@@ -172,6 +174,8 @@ class login : AppCompatActivity(), NavigationView.OnNavigationItemSelectedListen
                 // Código para atualizar a UI com a lista de conteudos
                 recyclerConteudos?.adapter = ConteudoAdapter(this.conteudos) { onClickConteudo(it) }
                 // enviaNotificacao(this.conteudos.get(0))
+                var navigationView = menu_lateral
+                navigationView.setCheckedItem(R.id.nav_home)
             }
         }.start()
     }

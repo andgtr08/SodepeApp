@@ -5,11 +5,13 @@
         android:title="@string/action_adicionar"
         android:icon="@drawable/ic_add_white"
         app:showAsAction="never" />
-    <item android:id="@+id/action_buscar"
+    <item
+        android:id="@+id/action_buscar"
+        android:enabled="false"
         android:icon="@drawable/ic_buscar_white"
         android:title="@string/action_buscar"
-        app:showAsAction="always"
-        app:actionViewClass="android.support.v7.widget.SearchView"/>
+        app:actionViewClass="android.support.v7.widget.SearchView"
+        app:showAsAction="never" />
     <item android:id="@+id/action_atualizar"
         android:icon="@drawable/ic_atualizar_white"
         android:title="@string/action_atualizar"

@@ -19,7 +19,7 @@ android:orientation="vertical">
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        android:padding="10dp">
+        android:padding="15dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -27,23 +27,21 @@ android:orientation="vertical">
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/textViewConfiguracoes"
-                android:layout_width="match_parent"
+                android:id="@+id/textViewNotificacoes"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tela de Configurações" />
+                android:text="@string/switchText"
+                android:textSize="20sp" />
+
+            <Switch
+                android:id="@+id/switchNotificacoes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:theme="@style/SwitchTheme" />
         </RelativeLayout>
     </ScrollView>
 
 </LinearLayout>
-
-<android.support.design.widget.NavigationView
-    android:layout_width="wrap_content"
-    android:layout_height="match_parent"
-    android:id="@+id/menu_lateral"
-    android:layout_gravity="start"
-    android:fitsSystemWindows="true"
-    app:headerLayout="@layout/menu_lateral_cabecalho"
-    app:menu="@menu/menu_lateral">
-
-</android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>
